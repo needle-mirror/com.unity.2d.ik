@@ -1,9 +1,9 @@
 {
-    "name": "com.unity.2d.ik.EditorTests",
+    "name": "Unity.2D.IK.EditorTests",
     "references": [
-        "com.unity.2d.ik.Editor",
-        "com.unity.2d.ik.Runtime",
-        "com.unity.2d.ik.RuntimeTests"
+        "Unity.2D.IK.Editor",
+        "Unity.2D.IK.Runtime",
+        "Unity.2D.IK.RuntimeTests"
     ],
     "optionalUnityReferences": [
         "TestAssemblies"

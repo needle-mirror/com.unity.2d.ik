@@ -1,11 +1,11 @@
 {
-    "name": "com.unity.2d.ik.Editor",
+    "name": "Unity.2D.IK.Editor",
     "references": [
         "Unity.InternalAPIEditorBridge.001",
         "Unity.InternalAPIEngineBridge.001",
-        "com.unity.2d.common.Editor",
-        "com.unity.2d.common.Runtime",
-        "com.unity.2d.ik.Runtime"
+        "Unity.2D.Common.Editor",
+        "Unity.2D.Common.Runtime",
+        "Unity.2D.IK.Runtime"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [

@@ -1,7 +1,7 @@
 {
-    "name": "com.unity.2d.ik.RuntimeTests",
+    "name": "Unity.2D.IK.RuntimeTests",
     "references": [
-        "com.unity.2d.ik.Runtime"
+        "Unity.2D.IK.Runtime"
     ],
     "optionalUnityReferences": [
         "TestAssemblies"
