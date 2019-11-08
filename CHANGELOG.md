@@ -1,5 +1,9 @@
 # Changelog
 
+## [3.0.0-preview.1] - 2019-11-09
+### Changed
+- Update to major version for Unity 2020.1
+
 ## [2.0.0-preview.1] - 2019-08-24
 ### Changed
 - Update to major version due to dependency major version upgrade
