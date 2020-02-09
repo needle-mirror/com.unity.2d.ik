@@ -158,6 +158,8 @@ namespace UnityEditor.Experimental.U2D.IK
 
         private void DoUndo(IKManager2D manager, string undoName, bool record)
         {
+            if (manager == null)
+                return;
             foreach (var solver in manager.solvers)
             {
                 if (solver == null || !solver.isActiveAndEnabled)

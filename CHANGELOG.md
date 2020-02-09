@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.0.0-preview.2] - 2020-02-10
+### Fixed
+- Fixed Null Reference Exception when restoring default pose when there is no IK Manager (Case 1211656)
+
 ## [2.0.0-preview.1] - 2019-08-24
 ### Changed
 - Update to major version due to dependency major version upgrade
