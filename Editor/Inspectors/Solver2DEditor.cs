@@ -63,7 +63,7 @@ namespace UnityEditor.Experimental.U2D.IK
             {
                 var solver = l_target as Solver2D;
 
-                if (!solver.isValid)
+                if (!solver.isValid || IKEditorManager.instance.FindManager(solver) == null)
                     continue;
 
                 return true;
