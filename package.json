@@ -1,7 +1,7 @@
 {
   "name": "com.unity.2d.ik",
   "displayName": "2D IK",
-  "version": "3.0.0-preview.2",
+  "version": "3.0.1-preview.2",
   "unity": "2020.1",
   "unityRelease": "0a10",
   "description": "2D IK package provides the necessary editor tooling to setup inverse kinematics for 2D characters and a runtime component to execute it.",
@@ -14,11 +14,12 @@
     "com.unity.2d.common": "3.0.0"
   },
   "relatedPackages": {
-    "com.unity.2d.ik.tests": "3.0.0-preview.2"
+    "com.unity.2d.ik.tests": "3.0.1-preview.2"
   },
   "repository": {
+    "footprint": "143430962a09f082b9f528d0756b4d4039985117",
     "type": "git",
     "url": "https://github.cds.internal.unity3d.com/unity/2d.git",
-    "revision": "83178ff2fa30c7b42403ff01daea705868121a23"
+    "revision": "5d3192fa192839232cc8a843fa1c1430c8485a0f"
   }
 }
