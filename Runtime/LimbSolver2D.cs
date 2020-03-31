@@ -19,11 +19,10 @@ namespace UnityEngine.Experimental.U2D.IK
             set { m_Flip = value; }
         }
 
-        protected override void OnValidate()
+        protected override void DoInitialize()
         {
-            m_Chain.transformCount = 3;
-
-            base.OnValidate();
+            m_Chain.transformCount = m_Chain.effector == null || IKUtility.GetAncestorCount(m_Chain.effector) < 2 ? 0 : 3;
+            base.DoInitialize();
         }
 
         protected override int GetChainCount()

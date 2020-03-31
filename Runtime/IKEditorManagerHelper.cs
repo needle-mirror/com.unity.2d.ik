@@ -4,7 +4,7 @@ using UnityEngine.Events;
 #if UNITY_EDITOR
 namespace UnityEditor.Experimental.U2D.IK
 {
-    [DefaultExecutionOrder(-1)]
+    [DefaultExecutionOrder(-2)]
     [ExecuteInEditMode]
     internal class IKEditorManagerHelper : MonoBehaviour
     {

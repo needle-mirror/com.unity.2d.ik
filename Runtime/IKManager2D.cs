@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace UnityEngine.Experimental.U2D.IK
 {
-    [DefaultExecutionOrder(-1)]
+    [DefaultExecutionOrder(-2)]
     public class IKManager2D : MonoBehaviour
     {
         [SerializeField]
