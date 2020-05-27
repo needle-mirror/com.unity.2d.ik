@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.0.2-preview.1] - 2020-05-27
+###Added
+- Ability to change IK Gizmo colours
+- Ability to hide individual IK Gizmo
+
+###Changed
+- IK Gizmo will not show for disabled IK Solvers.
+
 ## [2.0.1-preview.2] - 2020-04-01
 ### Fixed
 - Fixed Null Reference Exception when restoring default pose for LimbSolver (Case 1223323)

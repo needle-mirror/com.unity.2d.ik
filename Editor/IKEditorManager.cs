@@ -69,6 +69,32 @@ namespace UnityEditor.Experimental.U2D.IK
             Selection.selectionChanged -= OnSelectionChanged;
         }
 
+        private bool m_EnableGizmos;
+        private bool m_CurrentEnableGizmoState;
+        
+        void OnDrawGizmos()
+        {
+            m_EnableGizmos = true;
+            IKManager2D.onDrawGizmos.RemoveListener(OnDrawGizmos);
+        }
+        
+        public void CheckGizmoToggle()
+        {
+            //Ignore events other than Repaint
+            if (Event.current.type != EventType.Repaint)
+                return;
+
+            if (m_CurrentEnableGizmoState != m_EnableGizmos)
+                SceneView.RepaintAll();
+
+            m_CurrentEnableGizmoState = m_EnableGizmos;
+
+            //Assume the Gizmo toggle is disabled and listen to the event again
+            m_EnableGizmos = false;
+            IKManager2D.onDrawGizmos.RemoveListener(OnDrawGizmos);
+            IKManager2D.onDrawGizmos.AddListener(OnDrawGizmos);
+        }
+        
         private void OnSelectionChanged()
         {
             m_SelectedGameobjects = null;
@@ -245,6 +271,10 @@ namespace UnityEditor.Experimental.U2D.IK
 
         private void OnSceneGUI(SceneView sceneView)
         {
+            CheckGizmoToggle();
+            if (!m_CurrentEnableGizmoState)
+                return;
+            
             if (m_SelectedGameobjects == null)
                 m_SelectedGameobjects = Selection.gameObjects;
 

@@ -1,9 +1,10 @@
+using System;
 using System.Collections.Generic;
 
 namespace UnityEngine.Experimental.U2D.IK
 {
     [DefaultExecutionOrder(-2)]
-    public class IKManager2D : MonoBehaviour
+    public partial class IKManager2D : MonoBehaviour
     {
         [SerializeField]
         private List<Solver2D> m_Solvers = new List<Solver2D>();
@@ -24,6 +25,7 @@ namespace UnityEngine.Experimental.U2D.IK
         private void OnValidate()
         {
             m_Weight = Mathf.Clamp01(m_Weight);
+            OnEditorDataValidate();
         }
 
         private void OnEnable()
@@ -33,6 +35,7 @@ namespace UnityEngine.Experimental.U2D.IK
         private void Reset()
         {
             FindChildSolvers();
+            OnEditorDataValidate();
         }
 
         private void FindChildSolvers()
@@ -52,13 +55,18 @@ namespace UnityEngine.Experimental.U2D.IK
         public void AddSolver(Solver2D solver)
         {
             if (!m_Solvers.Contains(solver))
+            {
                 m_Solvers.Add(solver);
+                AddSolverEditorData();
+            }
         }
 
         public void RemoveSolver(Solver2D solver)
         {
+            RemoveSolverEditorData(solver);
             m_Solvers.Remove(solver);
         }
+
 
         public void UpdateManager()
         {
@@ -78,5 +86,10 @@ namespace UnityEngine.Experimental.U2D.IK
         {
             UpdateManager();
         }
+        
+#if UNITY_EDITOR
+        internal static Events.UnityEvent onDrawGizmos = new Events.UnityEvent();
+        private void OnDrawGizmos() { onDrawGizmos.Invoke(); }
+#endif
     }
 }

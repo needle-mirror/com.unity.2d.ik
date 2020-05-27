@@ -19,6 +19,7 @@ namespace UnityEditor.Experimental.U2D.IK
         private SerializedProperty m_ConstrainRotationProperty;
         private SerializedProperty m_SolveFromDefaultPoseProperty;
         private SerializedProperty m_WeightProperty;
+        private SerializedProperty m_SolverColorProperty;
 
         private void SetupProperties()
         {

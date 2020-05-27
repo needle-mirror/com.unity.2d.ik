@@ -23,7 +23,14 @@ namespace UnityEditor.Experimental.U2D.IK
             if (solver == null || !solver.isValid)
                 return;
 
-            DrawSolver(solver);
+            IKManager2D manager = IKEditorManager.instance.FindManager(solver);
+            if (!solver.isActiveAndEnabled || manager == null || !manager.isActiveAndEnabled)
+                return;
+
+            var solverData = manager.GetSolverEditorData(solver);
+            if (!solverData.showGizmo)
+                return;
+            DrawSolver(solver, solverData);
 
             var allChainsHaveTargets = solver.allChainsHaveTargets;
 
@@ -138,33 +145,23 @@ namespace UnityEditor.Experimental.U2D.IK
             return Selection.Contains(chain.target.gameObject);
         }
 
-        private void DrawSolver(Solver2D solver)
+        private void DrawSolver(Solver2D solver, IKManager2D.SolverEditorData editorData)
         {
             if (Event.current.type != EventType.Repaint)
                 return;
-
-            IKManager2D manager = IKEditorManager.instance.FindManager(solver);
-            bool isManagerDisabled = !solver.isActiveAndEnabled || manager == null || !manager.isActiveAndEnabled;
 
             for (int i = 0; i < solver.chainCount; ++i)
             {
                 var chain = solver.GetChain(i);
                 if (chain != null)
-                    DrawChain(chain, isManagerDisabled, solver.allChainsHaveTargets);
+                    DrawChain(chain, editorData.color, solver.allChainsHaveTargets);
             }
         }
 
-        private void DrawChain(IKChain2D chain, bool isManagerDisabled, bool solverHasTargets)
+        private void DrawChain(IKChain2D chain, Color solverColor, bool solverHasTargets)
         {
             Handles.matrix = Matrix4x4.identity;
-            Color color = enabledColor;
-
-            if (isManagerDisabled)
-                color = disabledColor;
-            else if (!solverHasTargets)
-                color = Color.yellow;
-
-            color = FadeFromChain(color, chain);
+            Color color = FadeFromChain(solverColor, chain);
 
             if (color.a == 0f)
                 return;
