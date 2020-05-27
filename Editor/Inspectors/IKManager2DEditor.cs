@@ -12,20 +12,52 @@ namespace UnityEditor.Experimental.U2D.IK
     [CanEditMultipleObjects]
     public class IKManager2DEditor : Editor
     {
-        private static class Contents
+        private class Contents
         {
             public static readonly GUIContent findAllSolversLabel = new GUIContent("Find Solvers", "Find all applicable solvers handled by this manager");
             public static readonly GUIContent weightLabel = new GUIContent("Weight", "Blend between Forward and Inverse Kinematics");
             public static readonly string listHeaderLabel = "IK Solvers";
             public static readonly string createSolverString = "Create Solver";
             public static readonly string restoreDefaultPoseString = "Restore Default Pose";
+            public static readonly GUIContent gizmoColorTooltip = new GUIContent("","Customizes the IK Chain's Gizmo color");
+            public static readonly GUIContent showGizmoTooltip = new GUIContent("", "Show/Hide IK Chain's Gizmo");
+            public static int showGizmoPropertyWidth = 20;
+            public static int solverPropertyWidth = 100;
+            public static int solverColorPropertyWidth = 40;
+            public static readonly GUIContent gizmoVisibilityToolTip  = new GUIContent("",L10n.Tr("Show/Hide Gizmo"));
+            public readonly GUIStyle visibilityToggleStyle;
+
+            public Contents()
+            {
+                visibilityToggleStyle = new GUIStyle();
+                visibilityToggleStyle.fixedHeight = EditorGUIUtility.singleLineHeight;
+                visibilityToggleStyle.fixedWidth = showGizmoPropertyWidth;
+                visibilityToggleStyle.border = new RectOffset(-5,-5,-5,-5);
+                visibilityToggleStyle.onNormal.background = LoadIconResource("Visibility_Tool.png");
+                visibilityToggleStyle.normal.background = LoadIconResource("Visibility_Hidded.png");
+            }
+            public static Texture2D LoadIconResource(string name)
+            {
+                string iconResourcePath = "Packages/com.unity.2d.ik/Editor/Icons";
+                string iconPath = "";
+
+                if (EditorGUIUtility.isProSkin)
+                    iconPath = System.IO.Path.Combine(iconResourcePath, "d_" + name);
+                else
+                    iconPath = System.IO.Path.Combine(iconResourcePath, name);
+                
+                return AssetDatabase.LoadAssetAtPath<Texture2D>(iconPath);
+            }
+
         }
 
+        static Contents k_Contents;
         private ReorderableList m_ReorderableList;
         private Solver2D m_SelectedSolver;
         private Editor m_SelectedSolverEditor;
 
         SerializedProperty m_SolversProperty;
+        SerializedProperty m_SolverEditorDataProperty;
         SerializedProperty m_WeightProperty;
         List<Type> m_SolverTypes;
         IKManager2D m_Manager;
@@ -35,6 +67,7 @@ namespace UnityEditor.Experimental.U2D.IK
             m_Manager = target as IKManager2D;
             m_SolverTypes = GetDerivedTypes<Solver2D>();
             m_SolversProperty = serializedObject.FindProperty("m_Solvers");
+            m_SolverEditorDataProperty = serializedObject.FindProperty("m_SolverEditorData");
             m_WeightProperty = serializedObject.FindProperty("m_Weight");
             SetupReordeableList();
         }
@@ -55,7 +88,19 @@ namespace UnityEditor.Experimental.U2D.IK
                     rect.y += 2f;
                     rect.height = EditorGUIUtility.singleLineHeight;
                     SerializedProperty element = m_SolversProperty.GetArrayElementAtIndex(index);
+                    SerializedProperty elementData = m_SolverEditorDataProperty.GetArrayElementAtIndex(index);
+                    var width = rect.width;
+                    rect.width = width > Contents.showGizmoPropertyWidth ? Contents.showGizmoPropertyWidth : width;
+                    var showGizmoProperty = elementData.FindPropertyRelative("showGizmo");
+                    showGizmoProperty.boolValue = GUI.Toggle(rect, showGizmoProperty.boolValue, Contents.gizmoVisibilityToolTip, k_Contents.visibilityToggleStyle);
+                    rect.x += rect.width;
+                    width -= rect.width;
+                    rect.width = width > Contents.solverPropertyWidth ? width - Contents.solverColorPropertyWidth  : Contents.solverPropertyWidth;
                     EditorGUI.PropertyField(rect, element, GUIContent.none);
+                    rect.x += rect.width;
+                    width -= 100;
+                    rect.width = width > Contents.solverColorPropertyWidth ? Contents.solverColorPropertyWidth : width;
+                    EditorGUI.PropertyField(rect, elementData.FindPropertyRelative("color"), Contents.gizmoColorTooltip);
                 };
             m_ReorderableList.onAddCallback = (ReorderableList list) =>
                 {
@@ -120,6 +165,9 @@ namespace UnityEditor.Experimental.U2D.IK
 
         public override void OnInspectorGUI()
         {
+            if(k_Contents == null)
+                k_Contents = new Contents();
+
             serializedObject.Update();
 
             EditorGUILayout.Space();
