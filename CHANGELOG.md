@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.0.2-preview.3] - 2020-11-16
+###Fixed
+- Version bump for CI fix for publishing
+
+## [3.0.2-preview.2] - 2020-11-16
+###Fixed
+- Fixed null reference exception thrown on changing values of a material while recording animation (Case 1286034)
+
 ## [3.0.2-preview.1] - 2020-05-27
 ###Added
 - Ability to change IK Gizmo colours
