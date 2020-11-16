@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.0-preview.1] - 2020-11-16
+###Fixed
+- Fixed null reference exception thrown on changing values of a material while recording animation (Case 1286034)
+
+###Changed
+- Minor version bump due to change in required Unity version
+
 ## [2.0.2-preview.1] - 2020-05-27
 ###Added
 - Ability to change IK Gizmo colours
@@ -50,7 +57,7 @@
 ### Added
 - Fix effector-target name. Effector becomes the transform that moves and the Target becomes the transform to reach.
 
-## [1.0.6-preview] - 2018-6-20
+## [1.0.6-preview] - 2018-06-20
 ### Added
 - Fix compatibility issues with Bone Manipulator
 - Restore default pose was not surviving between scenes.
