@@ -219,10 +219,23 @@ namespace UnityEditor.Experimental.U2D.IK
             }
         }
 
-        public List<Type> GetDerivedTypes<T>() where T : class
+        static List<Type> GetDerivedTypes<T>() where T : class
         {
-            List<Type> types = Assembly.GetAssembly(typeof(T)).GetTypes().Where(myType => myType.IsClass && !myType.IsAbstract && myType.IsSubclassOf(typeof(T))).ToList();
-            return types;
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            var derivedTypes = new List<Type>();
+
+            for (var i = 0; i < assemblies.Length; ++i)
+            {
+                var assemblyTypes = assemblies[i].GetTypes();
+                var types = assemblyTypes.Where(myType => 
+                    myType.IsClass && 
+                    !myType.IsAbstract && 
+                    myType.IsSubclassOf(typeof(T)));
+                
+                derivedTypes.AddRange(types);
+            }
+            
+            return derivedTypes;
         }
     }
 }

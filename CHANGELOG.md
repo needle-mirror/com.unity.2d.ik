@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.2.0-preview.1] - 2021-07-07
+### Fixed
+- IKManager2D does not detect classes inheriting from Solver2D (case 1347060)
+
 ## [2.1.0-preview.1] - 2020-11-16
 ###Fixed
 - Fixed null reference exception thrown on changing values of a material while recording animation (Case 1286034)
